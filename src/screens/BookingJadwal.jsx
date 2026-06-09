@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import StatusBar from '../components/StatusBar'
 import BottomNav from '../components/BottomNav'
 import Avatar from '../components/Avatar'
@@ -6,6 +6,7 @@ import Badge from '../components/Badge'
 import StepIndicator from '../components/StepIndicator'
 import { fisioterapis } from '../data/fisioterapis'
 import { getJadwal } from '../utils/jadwal'
+import { getJadwalBulan } from '../api'
 
 const DEFAULT_TERAPIS = fisioterapis[0]
 const DEFAULT_PKG = { sesi: 1, perSesi: 300000, total: 300000, save: null, popular: false }
@@ -17,7 +18,6 @@ const MAX_MONTH = { year: 2026, month: 7 }
 const DAY_LABELS = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab']
 const MONTH_NAMES = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
 const TIME_SLOTS = ['08:00', '09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00']
-const FULL_SLOTS = ['11:00']
 const MODES = [
   { id: 'klinik', label: 'Klinik', note: 'Bayar penuh' },
   { id: 'homecare', label: 'Homecare', note: 'DP + sisa di tempat' },
@@ -66,6 +66,7 @@ export default function BookingJadwal({ onNavigate, selectedPkg: pkgProp = null,
   const [curYear, setCurYear] = useState(2026)
   const [curMonth, setCurMonth] = useState(5)
   const [mode, setMode] = useState(initialMode)
+  const [bookedSlots, setBookedSlots] = useState({}) // { 'YYYY-MM-DD': ['09:00', ...] }
 
   // selectedDates: array of {year, month, date} sorted by date
   const [selectedDates, setSelectedDates] = useState(initialDates)
@@ -73,6 +74,20 @@ export default function BookingJadwal({ onNavigate, selectedPkg: pkgProp = null,
   const [selectedTimes, setSelectedTimes] = useState(initialTimes)
 
   const calendarRows = useMemo(() => generateCalendar(curYear, curMonth), [curYear, curMonth])
+
+  // Fetch slot terisi dari API saat bulan berubah
+  useEffect(() => {
+    getJadwalBulan(terapis.id, curYear, curMonth)
+      .then(data => {
+        const filled = {}
+        for (const [date, slots] of Object.entries(data)) {
+          const terisi = slots.filter(s => s.status === 'terisi').map(s => s.jam)
+          if (terisi.length) filled[date] = terisi
+        }
+        setBookedSlots(filled)
+      })
+      .catch(() => setBookedSlots({}))
+  }, [curYear, curMonth, terapis.id])
 
   const canGoPrev = !(curYear === MIN_MONTH.year && curMonth === MIN_MONTH.month)
   const canGoNext = !(curYear === MAX_MONTH.year && curMonth === MAX_MONTH.month)
@@ -283,7 +298,8 @@ export default function BookingJadwal({ onNavigate, selectedPkg: pkgProp = null,
                 </div>
                 <div className="grid grid-cols-4 gap-2 p-3">
                   {TIME_SLOTS.map((slot) => {
-                    const isFull = FULL_SLOTS.includes(slot)
+                    const dateStr = `${d.year}-${String(d.month).padStart(2, '0')}-${String(d.date).padStart(2, '0')}`
+                    const isFull = (bookedSlots[dateStr] || []).includes(slot)
                     const isChosen = selectedTimes[key] === slot
                     return (
                       <button key={slot} disabled={isFull}
