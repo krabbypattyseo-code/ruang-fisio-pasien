@@ -4,9 +4,12 @@ import BottomNav from '../components/BottomNav'
 import StepIndicator from '../components/StepIndicator'
 import { fisioterapis } from '../data/fisioterapis'
 import { buildBookingDetail, fmt } from '../utils/booking'
+import { createBooking } from '../api'
 
 const DEFAULT_TERAPIS = fisioterapis[0]
 const DEFAULT_PKG = { sesi: 1, perSesi: 300000, total: 300000, save: null, popular: false }
+const PASIEN_ID = 'pasien-demo-001'
+const PASIEN_NAMA = 'Budi Pratama'
 
 export default function BookingKonfirmasi({
   onNavigate,
@@ -20,6 +23,7 @@ export default function BookingKonfirmasi({
   backState = null,
 }) {
   const [method, setMethod] = useState('qris')
+  const [paying, setPaying] = useState(false)
 
   const terapis = terapisProp || DEFAULT_TERAPIS
   const pkg = pkgProp || DEFAULT_PKG
@@ -27,6 +31,34 @@ export default function BookingKonfirmasi({
   const bookingDetail = buildBookingDetail({ terapis, pkg, mode, layanan, selectedDates, selectedTimes })
 
   const HEADER_H = 148
+
+  async function handleBayar() {
+    setPaying(true)
+    try {
+      // Buat booking untuk setiap tanggal+jam yang dipilih
+      for (const d of selectedDates) {
+        const key = `${d.year}-${d.month}-${d.date}`
+        const jam = selectedTimes[key]
+        const tanggal = `${d.year}-${String(d.month).padStart(2, '0')}-${String(d.date).padStart(2, '0')}`
+        await createBooking({
+          pasien_nama: PASIEN_NAMA,
+          pasien_id: PASIEN_ID,
+          terapis_id: terapis.id,
+          tanggal,
+          jam,
+          lokasi: mode,
+          keluhan: layanan,
+          paket: pkg.sesi === 1 ? 'Sesi Tunggal' : `Paket ${pkg.sesi} Sesi`,
+          harga: pkg.total,
+        })
+      }
+      onNavigate('booking-berhasil', { terapis, pkg, mode, layanan, selectedDates, selectedTimes })
+    } catch (e) {
+      alert(e.message)
+    } finally {
+      setPaying(false)
+    }
+  }
 
   return (
     <div className="bg-[#f8f9fa] min-h-screen pb-[160px]">
@@ -126,17 +158,11 @@ export default function BookingKonfirmasi({
       {/* CTA */}
       <div className="fixed bottom-[80px] left-1/2 -translate-x-1/2 w-[390px] px-4 py-3 bg-white border-t border-[#e5e9eb] shadow-[0px_-2px_6px_0px_rgba(0,0,0,0.05)]">
         <button
-          onClick={() => onNavigate('booking-berhasil', {
-            terapis,
-            pkg,
-            mode,
-            layanan,
-            selectedDates,
-            selectedTimes,
-          })}
-          className="w-full bg-[#2aa148] text-white text-[13px] font-semibold rounded-[10px] h-10"
+          onClick={handleBayar}
+          disabled={paying}
+          className="w-full bg-[#2aa148] text-white text-[13px] font-semibold rounded-[10px] h-10 disabled:opacity-60"
         >
-          Bayar Sekarang — {fmt(pkg.total)}
+          {paying ? 'Memproses...' : `Bayar Sekarang — ${fmt(pkg.total)}`}
         </button>
       </div>
 
