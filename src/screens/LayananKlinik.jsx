@@ -22,21 +22,23 @@ const rules = [
 export default function LayananKlinik({ onNavigate }) {
   return (
     <div className="bg-[#f8f9fa] min-h-screen pb-[80px]">
-      <StatusBar />
 
-      {/* Header */}
-      <div className="bg-white flex items-center px-4 h-[52px] shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)]">
-        <button onClick={() => onNavigate('beranda')} className="text-[12px] text-[#2aa148] font-normal">
-          {'< Kembali'}
-        </button>
-        <p className="flex-1 text-center text-[16px] font-semibold text-[#1a1a1a]">Layanan Klinik</p>
+      {/* ── FIXED HEADER ── */}
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[390px] z-30">
+        <StatusBar />
+        <div className="bg-white flex items-center px-4 h-[52px] shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)]">
+          <button onClick={() => onNavigate('beranda')} className="text-[12px] text-[#2aa148] font-normal">
+            {'< Kembali'}
+          </button>
+          <p className="flex-1 text-center text-[16px] font-semibold text-[#1a1a1a]">Layanan Klinik</p>
+        </div>
+        <div className="bg-[#2aa148] px-5 h-[90px] flex flex-col justify-center">
+          <p className="text-[17px] font-bold text-white">Terapi Langsung di Klinik</p>
+          <p className="text-[10px] text-[#d1f7db] mt-1">Fisioterapis bersertifikat IFI • Alat lengkap • Lokasi Tangerang</p>
+        </div>
       </div>
-
-      {/* Hero */}
-      <div className="bg-[#2aa148] px-5 h-[90px] flex flex-col justify-center">
-        <p className="text-[17px] font-bold text-white">Terapi Langsung di Klinik</p>
-        <p className="text-[10px] text-[#d1f7db] mt-1">Fisioterapis bersertifikat IFI • Alat lengkap • Lokasi Tangerang</p>
-      </div>
+      {/* Spacer: StatusBar 44 + Navbar 52 + Hero 90 = 186px */}
+      <div className="h-[186px]" />
 
       {/* Info chips */}
       <div className="flex gap-2 px-4 mt-4">

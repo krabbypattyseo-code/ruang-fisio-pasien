@@ -4,12 +4,12 @@ import BottomNav from '../components/BottomNav'
 import Avatar from '../components/Avatar'
 
 const menuItems = [
-  { label: 'Laporan Sesi Saya', screen: 'laporan', state: { from: 'profil' } },
-  { label: 'Terapis Favorit', screen: null },
-  { label: 'Metode Pembayaran', screen: null },
-  { label: 'Notifikasi', screen: null },
-  { label: 'Bantuan & FAQ', screen: null },
-  { label: 'Syarat & Ketentuan', screen: null },
+  { label: '📊  Laporan Sesi Saya', screen: 'profil-laporan' },
+  { label: '⭐  Terapis Favorit', screen: 'profil-favorit' },
+  { label: '💳  Metode Pembayaran', screen: 'profil-pembayaran' },
+  { label: '🔔  Notifikasi', screen: 'profil-notifikasi' },
+  { label: '❓  Bantuan & FAQ', screen: 'profil-bantuan' },
+  { label: '📋  Syarat & Ketentuan', screen: 'profil-ketentuan' },
 ]
 
 // Riwayat sesi — dipindahkan dari Tab Booking ke Profil

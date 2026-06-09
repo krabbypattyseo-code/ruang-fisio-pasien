@@ -107,42 +107,50 @@ const featuredTherapists = fisioterapis.filter((f) => f.featured)
 export default function Beranda({ onNavigate }) {
   return (
     <div className="bg-[#f8f9fa] min-h-screen pb-[80px]">
-      <StatusBar />
 
-      {/* Navbar */}
-      <div className="bg-white h-14 flex items-center px-5 shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)]">
-        <span className="text-[18px] font-bold text-[#2aa148]">Ruang Fisio</span>
-        <div className="ml-auto flex items-center gap-2">
-          <span className="text-[11px] text-[#6b7280]">●</span>
-          <div className="bg-[#e8f6eb] rounded-[6px] px-2 py-1">
-            <span className="text-[10px] font-semibold text-[#2aa148]">IFI</span>
+      {/* ── FIXED HEADER ── */}
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[390px] z-30">
+        <StatusBar />
+
+        {/* Navbar */}
+        <div className="bg-white h-14 flex items-center px-5 shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)]">
+          <span className="text-[18px] font-bold text-[#2aa148]">Ruang Fisio</span>
+          <div className="ml-auto flex items-center gap-2">
+            <span className="text-[11px] text-[#6b7280]">●</span>
+            <div className="bg-[#e8f6eb] rounded-[6px] px-2 py-1">
+              <span className="text-[10px] font-semibold text-[#2aa148]">IFI</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Hero */}
-      <div className="bg-[#2aa148] px-5 pt-4 pb-5">
-        <p className="text-[18px] font-bold text-white">Cari Fisioterapis Terbaik</p>
-        <p className="text-[12px] text-[#d1f7db] mt-1">Tersertifikasi IFI untuk cedera, rehabilitasi & nyeri</p>
-        <button
-          onClick={() => onNavigate('layanan')}
-          className="mt-3 w-full bg-white rounded-[10px] h-[38px] flex items-center px-3 text-left"
-        >
-          <span className="text-[11px] text-[#a6a6a6]">🔍  Cari fisioterapis, kondisi (HNP, ACL, Stroke)...</span>
-        </button>
+        {/* Hero */}
+        <div className="bg-[#2aa148] px-5 pt-4 pb-5">
+          <p className="text-[18px] font-bold text-white">Cari Fisioterapis Terbaik</p>
+          <p className="text-[12px] text-[#d1f7db] mt-1">Tersertifikasi IFI untuk cedera, rehabilitasi & nyeri</p>
+          <button
+            onClick={() => onNavigate('layanan')}
+            className="mt-3 w-full bg-white rounded-[10px] h-[38px] flex items-center px-3 text-left"
+          >
+            <span className="text-[11px] text-[#a6a6a6]">🔍  Cari fisioterapis, kondisi (HNP, ACL, Stroke)...</span>
+          </button>
+        </div>
       </div>
+      {/* ── END FIXED HEADER ── */}
+
+      {/* Spacer: StatusBar 44 + Navbar 56 + Hero ~90 = 190px */}
+      <div className="h-[190px]" />
 
       <div className="px-4 mt-4">
         {/* Mode Layanan */}
         <p className="text-[14px] font-semibold text-[#1a1a1a]">Mode Layanan</p>
-        <div className="flex gap-2 mt-3 items-stretch">
+        <div className="flex gap-3 mt-3 items-stretch">
           {modes.map((m) => (
             <button
               key={m.title}
               onClick={() => onNavigate(m.screen)}
-              className="bg-white rounded-[10px] shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)] p-3 flex-1 text-left flex flex-col items-center gap-2"
+              className="bg-white rounded-[12px] shadow-[0px_1px_4px_0px_rgba(0,0,0,0.07)] py-4 px-2 flex-1 flex flex-col items-center gap-2.5"
             >
-              <div className="w-11 h-11 rounded-full bg-[#e8f6eb] flex items-center justify-center">
+              <div className="w-12 h-12 rounded-full bg-[#e8f6eb] flex items-center justify-center">
                 {m.icon}
               </div>
               <p className="text-[12px] font-semibold text-[#2aa148] text-center">{m.title}</p>

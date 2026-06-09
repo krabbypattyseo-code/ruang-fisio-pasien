@@ -15,6 +15,12 @@ import LaporanSesi from './screens/LaporanSesi'
 import LayananKlinik from './screens/LayananKlinik'
 import LayananHomecare from './screens/LayananHomecare'
 import LayananOnline from './screens/LayananOnline'
+import ProfilLaporan from './screens/ProfilLaporan'
+import ProfilFavorit from './screens/ProfilFavorit'
+import ProfilPembayaran from './screens/ProfilPembayaran'
+import ProfilNotifikasi from './screens/ProfilNotifikasi'
+import ProfilBantuan from './screens/ProfilBantuan'
+import ProfilKetentuan from './screens/ProfilKetentuan'
 
 const SCREENS = {
   beranda: Beranda,
@@ -33,6 +39,12 @@ const SCREENS = {
   'layanan-klinik': LayananKlinik,
   'layanan-homecare': LayananHomecare,
   'layanan-online': LayananOnline,
+  'profil-laporan': ProfilLaporan,
+  'profil-favorit': ProfilFavorit,
+  'profil-pembayaran': ProfilPembayaran,
+  'profil-notifikasi': ProfilNotifikasi,
+  'profil-bantuan': ProfilBantuan,
+  'profil-ketentuan': ProfilKetentuan,
 }
 
 export default function App() {
