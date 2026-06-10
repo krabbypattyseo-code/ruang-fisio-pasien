@@ -70,13 +70,8 @@ export default function ProfilLaporan({ onNavigate, from = 'profil' }) {
           <button onClick={() => onNavigate(from)} className="text-[20px] text-[#1a1a1a]">‹</button>
           <p className="flex-1 text-center text-[15px] font-semibold text-[#1a1a1a]">Laporan Sesi Saya</p>
         </div>
-      </div>
-      <div className="h-[96px]" />
-
-      <div className="px-4 flex flex-col gap-4">
-
-        {/* Filter periode */}
-        <div className="flex gap-2 overflow-x-auto pb-1">
+        {/* Filter periode — sticky di bawah title */}
+        <div className="flex gap-2 px-4 py-3 border-t border-[#f0f0f0] overflow-x-auto">
           {PERIODE_OPTIONS.map((p) => (
             <button
               key={p}
@@ -89,6 +84,11 @@ export default function ProfilLaporan({ onNavigate, from = 'profil' }) {
             </button>
           ))}
         </div>
+      </div>
+      {/* Spacer: StatusBar 44 + title 52 + filter row 46 = 142px */}
+      <div className="h-[142px]" />
+
+      <div className="px-4 flex flex-col gap-4">
 
         {/* Stat cards 2x2 */}
         <div className="grid grid-cols-2 gap-2">

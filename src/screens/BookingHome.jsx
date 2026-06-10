@@ -99,10 +99,16 @@ function StateAktif({ onNavigate }) {
             </div>
           </div>
           <div className="flex gap-2 mt-3">
-            <button className="flex-1 bg-[#2aa148] text-white text-[11px] font-semibold rounded-[8px] h-8">
+            <button
+              onClick={() => onNavigate('dashboard')}
+              className="flex-1 bg-[#2aa148] text-white text-[11px] font-semibold rounded-[8px] h-8"
+            >
               Lihat Detail
             </button>
-            <button className="flex-1 bg-white border border-[#2aa148] text-[#2aa148] text-[11px] font-semibold rounded-[8px] h-8">
+            <button
+              onClick={() => onNavigate('booking-jadwal')}
+              className="flex-1 bg-white border border-[#2aa148] text-[#2aa148] text-[11px] font-semibold rounded-[8px] h-8"
+            >
               Reschedule
             </button>
           </div>
@@ -188,9 +194,6 @@ function StateAktif({ onNavigate }) {
 
 // ── Main Component ─────────────────────────────────────────────────────────────
 export default function BookingHome({ onNavigate }) {
-  // Toggle demo: true = ada booking, false = kosong
-  const [adaBooking, setAdaBooking] = useState(false)
-
   return (
     <div className="bg-[#f8f9fa] min-h-screen pb-[80px] flex flex-col">
       <StatusBar />
@@ -198,29 +201,16 @@ export default function BookingHome({ onNavigate }) {
       {/* Header */}
       <div className="bg-white flex items-center justify-between px-5 h-[52px] shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)]">
         <p className="text-[17px] font-bold text-[#1a1a1a]">Booking</p>
-        <div className="flex items-center gap-2">
-          {/* Demo toggle state */}
-          <button
-            onClick={() => setAdaBooking(!adaBooking)}
-            className="text-[10px] text-[#6b7280] bg-[#f4f4f4] px-2 py-1 rounded-[6px]"
-          >
-            Demo: {adaBooking ? 'State B' : 'State A'}
-          </button>
-          <button
-            onClick={() => onNavigate('booking-pilih-terapis')}
-            className="bg-[#2aa148] text-white text-[11px] font-semibold rounded-[8px] px-3 h-7 flex items-center gap-1"
-          >
-            + Buat Baru
-          </button>
-        </div>
+        <button
+          onClick={() => onNavigate('booking-pilih-terapis')}
+          className="bg-[#2aa148] text-white text-[11px] font-semibold rounded-[8px] px-3 h-7 flex items-center gap-1"
+        >
+          + Buat Baru
+        </button>
       </div>
 
-      {/* Content */}
-      {adaBooking ? (
-        <StateAktif onNavigate={onNavigate} />
-      ) : (
-        <StateKosong onNavigate={onNavigate} />
-      )}
+      {/* Content — show active state as default */}
+      <StateAktif onNavigate={onNavigate} />
 
       <BottomNav active="booking" onNavigate={onNavigate} />
     </div>

@@ -77,8 +77,12 @@ export default function BookingDetail({ onNavigate }) {
   }
 
   function handleLanjut() {
-    // Pass selectedArea ke BookingPilihPaket untuk smart highlight
-    onNavigate('booking-pilih-paket', { selectedArea })
+    onNavigate('booking-pilih-paket', {
+      selectedArea,
+      initialKeluhan: keluhan,
+      initialKondisi: selectedKondisi,
+      initialMode: mode,
+    })
   }
 
   // StatusBar 44 + Title 52 + StepIndicator 52 = 148px

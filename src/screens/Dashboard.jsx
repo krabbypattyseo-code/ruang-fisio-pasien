@@ -3,10 +3,10 @@ import BottomNav from '../components/BottomNav'
 import Avatar from '../components/Avatar'
 
 const quickAccess = [
-  { emoji: '📅', label: 'Booking Saya', bg: 'bg-[#e8f6eb]', color: 'text-[#2aa148]', screen: 'booking-jadwal' },
-  { emoji: '♥', label: 'Terapis Favorit', bg: 'bg-[#feebee]', color: 'text-[#d62f57]', screen: null },
-  { emoji: '📋', label: 'Laporan Sesi', bg: 'bg-[#e8f6eb]', color: 'text-[#2aa148]', screen: 'laporan' },
-  { emoji: '💳', label: 'Transaksi', bg: 'bg-[#eaeffe]', color: 'text-[#3b82f6]', screen: null },
+  { emoji: '📅', label: 'Booking Saya', bg: 'bg-[#e8f6eb]', color: 'text-[#2aa148]', screen: 'booking-home' },
+  { emoji: '♥', label: 'Terapis Favorit', bg: 'bg-[#feebee]', color: 'text-[#d62f57]', screen: 'profil-favorit' },
+  { emoji: '📋', label: 'Laporan Sesi', bg: 'bg-[#e8f6eb]', color: 'text-[#2aa148]', screen: 'profil-laporan' },
+  { emoji: '💳', label: 'Transaksi', bg: 'bg-[#eaeffe]', color: 'text-[#3b82f6]', screen: 'profil-pembayaran' },
 ]
 const history = [
   { initials: 'RK', name: 'Rina Kusuma, S.Ft', detail: 'Sel 20 Mei · Homecare · Lutut', stars: 5 },
@@ -82,7 +82,7 @@ export default function Dashboard({ onNavigate }) {
         {/* Riwayat */}
         <div className="flex items-center mt-4">
           <p className="text-[14px] font-semibold text-[#1a1a1a]">Riwayat Sesi Fisioterapi</p>
-          <button className="ml-auto text-[11px] font-medium text-[#2aa148]">Lihat semua</button>
+          <button onClick={() => onNavigate('profil-laporan')} className="ml-auto text-[11px] font-medium text-[#2aa148]">Lihat semua</button>
         </div>
         <div className="flex flex-col gap-2 mt-2">
           {history.map((h) => (
@@ -95,8 +95,8 @@ export default function Dashboard({ onNavigate }) {
               </div>
               <div className="text-right">
                 <span className="bg-[#e8f6eb] text-[#2aa148] text-[9px] font-medium px-2 py-0.5 rounded-[4px]">Selesai</span>
-                <button onClick={() => onNavigate('laporan')} className="block text-[10px] font-medium text-[#2aa148] mt-2">Laporan Sesi</button>
-                <button onClick={() => onNavigate('profil-terapis')} className="block text-[10px] font-medium text-[#2aa148] mt-0.5">Booking Lagi</button>
+                <button onClick={() => onNavigate('profil-laporan')} className="block text-[10px] font-medium text-[#2aa148] mt-2">Laporan Sesi</button>
+                <button onClick={() => onNavigate('layanan')} className="block text-[10px] font-medium text-[#2aa148] mt-0.5">Booking Lagi</button>
               </div>
             </div>
           ))}

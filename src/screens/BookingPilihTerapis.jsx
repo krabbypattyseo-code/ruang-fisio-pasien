@@ -1,49 +1,20 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import StatusBar from '../components/StatusBar'
 import BottomNav from '../components/BottomNav'
-import Avatar from '../components/Avatar'
-import Badge from '../components/Badge'
+import StepIndicator from '../components/StepIndicator'
+import TherapistCard from '../components/TherapistCard'
+import { useDebounce } from '../hooks/useDebounce'
 import { fisioterapis, jadwalOrder } from '../data/fisioterapis'
 
 const MODE_FILTERS = ['Semua', 'Klinik', 'Homecare', 'Online', 'Top Rating']
 
-function useDebounce(value, delay) {
-  const [debounced, setDebounced] = useState(value)
-  useEffect(() => {
-    const t = setTimeout(() => setDebounced(value), delay)
-    return () => clearTimeout(t)
-  }, [value, delay])
-  return debounced
-}
-
-// Step indicator khusus 5-step untuk flow dari BookingHome
-function StepIndicator5({ step }) {
-  const steps = [
-    { num: 1, label: 'Terapis' },
-    { num: 2, label: 'Paket' },
-    { num: 3, label: 'Jadwal' },
-    { num: 4, label: 'Detail' },
-    { num: 5, label: 'Bayar' },
-  ]
-  return (
-    <div className="bg-white h-[44px] flex items-center justify-center px-3 border-b border-[#e5e9eb]">
-      {steps.map((s, i) => (
-        <div key={s.num} className="flex items-center">
-          <div className={`h-[20px] flex items-center px-2 rounded-full text-[9px] font-semibold whitespace-nowrap ${
-            s.num < step
-              ? 'bg-[#e8f6eb] text-[#2aa148]'
-              : s.num === step
-              ? 'bg-[#2aa148] text-white'
-              : 'bg-[#f0f0f0] text-[#9ca3af]'
-          }`}>
-            {s.num < step ? `✓ ${s.label}` : `${s.num} ${s.label}`}
-          </div>
-          {i < 4 && <div className="w-2 h-px bg-[#e5e9eb] mx-0.5" />}
-        </div>
-      ))}
-    </div>
-  )
-}
+const STEPS_5 = [
+  { num: 1, label: 'Terapis' },
+  { num: 2, label: 'Paket' },
+  { num: 3, label: 'Jadwal' },
+  { num: 4, label: 'Detail' },
+  { num: 5, label: 'Bayar' },
+]
 
 export default function BookingPilihTerapis({ onNavigate }) {
   const [modeFilter, setModeFilter] = useState('Semua')
@@ -92,7 +63,7 @@ export default function BookingPilihTerapis({ onNavigate }) {
         </div>
 
         {/* Step indicator 5-step */}
-        <StepIndicator5 step={1} />
+        <StepIndicator step={1} steps={STEPS_5} />
 
         {/* Search + filter */}
         <div className="px-3 pt-2 pb-2 border-t border-[#f0f0f0]">
@@ -143,7 +114,12 @@ export default function BookingPilihTerapis({ onNavigate }) {
         ) : (
           <div className="flex flex-col gap-3">
             {results.map((t) => (
-              <TerapisCard key={t.id} terapis={t} onNavigate={onNavigate} />
+              <TherapistCard
+                key={t.id}
+                terapis={t}
+                actionLabel="Pilih"
+                onAction={(terapis) => onNavigate('booking-pilih-paket', { terapis })}
+              />
             ))}
           </div>
         )}
@@ -154,35 +130,3 @@ export default function BookingPilihTerapis({ onNavigate }) {
   )
 }
 
-function TerapisCard({ terapis: t, onNavigate }) {
-  return (
-    <div className="bg-white rounded-[12px] shadow-[0px_2px_8px_0px_rgba(0,0,0,0.06)] p-3">
-      <div className="flex gap-3">
-        <Avatar initials={t.inisial} size="lg" />
-        <div className="flex-1 min-w-0">
-          <Badge label={t.status === 'ruang_fisio' ? 'Ruang Fisio' : 'Mitra ✓'} />
-          <p className="text-[13px] font-semibold text-[#1a1a1a] mt-0.5">{t.nama}, {t.gelar}</p>
-          <p className="text-[11px] text-[#6b7280]">{t.spesialisasi.join(' · ')}</p>
-          <div className="flex items-center gap-1 mt-0.5">
-            <span className="text-[11px] text-[#ffbd18]">{'★'.repeat(Math.round(t.rating))}</span>
-            <span className="text-[10px] text-[#6b7280]">{t.rating} · {t.jumlah_ulasan} ulasan</span>
-          </div>
-          <p className="text-[9px] text-[#6b7280] mt-0.5">
-            {t.mode_layanan.map((m) => m.charAt(0).toUpperCase() + m.slice(1)).join(' · ')} · ⏰ {t.jadwal_terdekat}
-          </p>
-        </div>
-        <div className="flex flex-col items-end justify-between flex-shrink-0">
-          <p className="text-[12px] font-semibold text-[#2aa148]">
-            Rp {t.harga_mulai.toLocaleString('id-ID')}
-          </p>
-          <button
-            onClick={() => onNavigate('booking-pilih-paket', { terapis: t })}
-            className="bg-[#2aa148] text-white text-[10px] font-semibold rounded-[6px] px-4 h-6"
-          >
-            Pilih
-          </button>
-        </div>
-      </div>
-    </div>
-  )
-}

@@ -5,15 +5,25 @@ import Avatar from '../components/Avatar'
 import Badge from '../components/Badge'
 import StepIndicator from '../components/StepIndicator'
 import { fisioterapis } from '../data/fisioterapis'
-import { getJadwal } from '../utils/jadwal'
+import { isDateAvailable as isDateAvailableUtil } from '../utils/jadwal'
 import { getJadwalBulan } from '../api'
 
 const DEFAULT_TERAPIS = fisioterapis[0]
 const DEFAULT_PKG = { sesi: 1, perSesi: 300000, total: 300000, save: null, popular: false }
 
-const TODAY = { year: 2026, month: 5, date: 26 }
-const MIN_MONTH = { year: 2026, month: 5 }
-const MAX_MONTH = { year: 2026, month: 7 }
+const _now = new Date()
+const TODAY = { year: _now.getFullYear(), month: _now.getMonth() + 1, date: _now.getDate() }
+const MIN_MONTH = { year: _now.getFullYear(), month: _now.getMonth() + 1 }
+
+// Allow booking up to 2 months ahead
+const _maxDate = new Date(_now.getFullYear(), _now.getMonth() + 3, 0)
+const MAX_MONTH = { year: _maxDate.getFullYear(), month: _maxDate.getMonth() + 1 }
+
+// Three visible month pills: current, +1, +2
+const VISIBLE_MONTHS = [0, 1, 2].map((offset) => {
+  const d = new Date(_now.getFullYear(), _now.getMonth() + offset, 1)
+  return { year: d.getFullYear(), month: d.getMonth() + 1 }
+})
 
 const DAY_LABELS = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab']
 const MONTH_NAMES = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
@@ -32,15 +42,6 @@ function generateCalendar(year, month) {
   const rows = []
   for (let i = 0; i < cells.length; i += 7) rows.push(cells.slice(i, i + 7))
   return rows
-}
-
-function isDateAvailable(year, month, date, terapis) {
-  const dayOfWeek = new Date(year, month - 1, date).getDay()
-  if (dayOfWeek === 0) return false
-  const dayName = DAY_LABELS[dayOfWeek]
-  const jadwal = getJadwal(terapis)
-  const found = jadwal.find(j => j.day === dayName)
-  return found ? found.available : false
 }
 
 function isPast(year, month, date) {
@@ -63,8 +64,8 @@ export default function BookingJadwal({ onNavigate, selectedPkg: pkgProp = null,
   const pkg = pkgProp || DEFAULT_PKG
   const maxDates = pkg.sesi  // max tanggal = jumlah sesi
 
-  const [curYear, setCurYear] = useState(2026)
-  const [curMonth, setCurMonth] = useState(5)
+  const [curYear, setCurYear] = useState(TODAY.year)
+  const [curMonth, setCurMonth] = useState(TODAY.month)
   const [mode, setMode] = useState(initialMode)
   const [bookedSlots, setBookedSlots] = useState({}) // { 'YYYY-MM-DD': ['09:00', ...] }
 
@@ -104,7 +105,7 @@ export default function BookingJadwal({ onNavigate, selectedPkg: pkgProp = null,
   function handleSelectDate(date) {
     if (!date) return
     if (isPast(curYear, curMonth, date)) return
-    if (!isDateAvailable(curYear, curMonth, date, terapis)) return
+    if (!isDateAvailableUtil(curYear, curMonth, date, terapis)) return
 
     const key = dateKey(curYear, curMonth, date)
     const existing = selectedDates.findIndex(d => dateKey(d.year, d.month, d.date) === key)
@@ -210,10 +211,10 @@ export default function BookingJadwal({ onNavigate, selectedPkg: pkgProp = null,
 
           {/* Pill bulan */}
           <div className="flex justify-center gap-2 py-2 border-b border-[#f5f5f5]">
-            {[5, 6, 7].map((m) => (
-              <button key={m} onClick={() => setCurMonth(m)}
-                className={`h-6 px-3 rounded-full text-[10px] font-medium transition-colors ${curMonth === m ? 'bg-[#2aa148] text-white' : 'bg-[#f4f4f4] text-[#6b7280]'}`}>
-                {MONTH_NAMES[m].slice(0, 3)}
+            {VISIBLE_MONTHS.map(({ year, month }) => (
+              <button key={`${year}-${month}`} onClick={() => { setCurYear(year); setCurMonth(month) }}
+                className={`h-6 px-3 rounded-full text-[10px] font-medium transition-colors ${curMonth === month && curYear === year ? 'bg-[#2aa148] text-white' : 'bg-[#f4f4f4] text-[#6b7280]'}`}>
+                {MONTH_NAMES[month].slice(0, 3)}
               </button>
             ))}
           </div>
@@ -232,7 +233,7 @@ export default function BookingJadwal({ onNavigate, selectedPkg: pkgProp = null,
                 {row.map((date, di) => {
                   if (!date) return <div key={`e-${ri}-${di}`} className="h-9" />
                   const past = isPast(curYear, curMonth, date)
-                  const available = isDateAvailable(curYear, curMonth, date, terapis)
+                  const available = isDateAvailableUtil(curYear, curMonth, date, terapis)
                   const key = dateKey(curYear, curMonth, date)
                   const isSelected = selectedDates.some(d => dateKey(d.year, d.month, d.date) === key)
                   const order = selectedDates.findIndex(d => dateKey(d.year, d.month, d.date) === key)

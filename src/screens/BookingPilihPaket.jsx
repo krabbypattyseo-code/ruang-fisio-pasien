@@ -2,11 +2,10 @@ import { useState } from 'react'
 import StatusBar from '../components/StatusBar'
 import BottomNav from '../components/BottomNav'
 import StepIndicator from '../components/StepIndicator'
+import { fmt } from '../utils/booking'
 import { fisioterapis } from '../data/fisioterapis'
 
 const layananTypes = ['Fisioterapi Umum', 'Sport Therapy', 'Pasca Operasi', 'Lansia']
-
-const fmt = (n) => `Rp ${n.toLocaleString('id-ID')}`
 
 const round5k = (n) => Math.round(n / 5000) * 5000
 

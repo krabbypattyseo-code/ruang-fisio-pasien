@@ -35,7 +35,7 @@ export default function BookingKonfirmasi({
   async function handleBayar() {
     setPaying(true)
     try {
-      // Buat booking untuk setiap tanggal+jam yang dipilih
+      // Coba kirim ke backend; jika tidak tersedia (mode demo), tetap lanjut
       for (const d of selectedDates) {
         const key = `${d.year}-${d.month}-${d.date}`
         const jam = selectedTimes[key]
@@ -50,13 +50,11 @@ export default function BookingKonfirmasi({
           keluhan: layanan,
           paket: pkg.sesi === 1 ? 'Sesi Tunggal' : `Paket ${pkg.sesi} Sesi`,
           harga: pkg.total,
-        })
+        }).catch(() => {})   // backend opsional — tetap lanjut ke success page
       }
-      onNavigate('booking-berhasil', { terapis, pkg, mode, layanan, selectedDates, selectedTimes })
-    } catch (e) {
-      alert(e.message)
     } finally {
       setPaying(false)
+      onNavigate('booking-berhasil', { terapis, pkg, mode, layanan, selectedDates, selectedTimes })
     }
   }
 

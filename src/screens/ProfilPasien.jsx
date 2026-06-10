@@ -60,12 +60,12 @@ export default function ProfilPasien({ onNavigate }) {
   })
 
   return (
-    <div className="bg-[#f7f7f8] min-h-screen pb-[76px]">
+    <div className="bg-[#f8f9fa] min-h-screen pb-[76px]">
       <StatusBar />
 
       {/* Header */}
       <div className="bg-white px-4 h-14 flex items-center">
-        <span className="text-[14px] font-semibold text-[#1a1a1f]">Profil Saya</span>
+        <span className="text-[14px] font-semibold text-[#1a1a1a]">Profil Saya</span>
       </div>
 
       {/* Profile card */}
@@ -74,9 +74,9 @@ export default function ProfilPasien({ onNavigate }) {
           <span className="text-[24px] font-bold text-[#2aa148]">R</span>
         </div>
         <div>
-          <p className="text-[15px] font-bold text-[#1a1a1f]">Rizki Pratama</p>
-          <p className="text-[11px] text-[#666673]">rizki@email.com</p>
-          <p className="text-[11px] text-[#666673]">+62 812-3456-7890</p>
+          <p className="text-[15px] font-bold text-[#1a1a1a]">Rizki Pratama</p>
+          <p className="text-[11px] text-[#6b7280]">rizki@email.com</p>
+          <p className="text-[11px] text-[#6b7280]">+62 812-3456-7890</p>
         </div>
         <button className="ml-auto text-[11px] font-medium text-[#2aa148] border border-[#2aa148] rounded-[8px] px-3 py-1.5">
           Edit
@@ -92,14 +92,14 @@ export default function ProfilPasien({ onNavigate }) {
         ].map((s) => (
           <div key={s.label} className="bg-white rounded-[10px] shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)] p-3 flex-1 text-center">
             <p className={`text-[18px] font-bold ${s.color}`}>{s.value}</p>
-            <p className="text-[9px] text-[#666673]">{s.label}</p>
+            <p className="text-[9px] text-[#6b7280]">{s.label}</p>
           </div>
         ))}
       </div>
 
       {/* ── RIWAYAT SESI ── (dipindahkan dari Tab Booking) */}
       <div className="mx-4 mt-4">
-        <p className="text-[14px] font-semibold text-[#1a1a1f] mb-3">Riwayat Sesi</p>
+        <p className="text-[14px] font-semibold text-[#1a1a1a] mb-3">Riwayat Sesi</p>
 
         {/* Tab filter */}
         <div className="flex gap-2 mb-3">
@@ -129,7 +129,7 @@ export default function ProfilPasien({ onNavigate }) {
               <div key={r.id} className="bg-white rounded-[12px] shadow-[0px_1px_4px_0px_rgba(0,0,0,0.04)] p-3 flex items-start gap-3">
                 <Avatar initials={r.inisial} size="sm" />
                 <div className="flex-1">
-                  <p className="text-[12px] font-semibold text-[#1a1a1f]">{r.nama}</p>
+                  <p className="text-[12px] font-semibold text-[#1a1a1a]">{r.nama}</p>
                   <p className="text-[10px] text-[#6b7280]">{r.tanggal} · {r.mode} · {r.layanan}</p>
                   {r.rating && (
                     <p className="text-[10px] text-[#ffbd18] mt-0.5">{'★'.repeat(r.rating)}{'☆'.repeat(5 - r.rating)}</p>
@@ -144,7 +144,10 @@ export default function ProfilPasien({ onNavigate }) {
                     {r.status}
                   </span>
                   {r.status === 'Selesai' && !r.sudahUlasan && (
-                    <button className="text-[9px] font-semibold text-[#2aa148] bg-[#e8f5ed] px-2 py-0.5 rounded-full">
+                    <button
+                      onClick={() => onNavigate('laporan')}
+                      className="text-[9px] font-semibold text-[#2aa148] bg-[#e8f5ed] px-2 py-0.5 rounded-full"
+                    >
                       Beri Ulasan
                     </button>
                   )}
@@ -162,18 +165,21 @@ export default function ProfilPasien({ onNavigate }) {
             key={item.label}
             onClick={() => item.screen && onNavigate(item.screen, item.state || {})}
             className={`w-full flex items-center justify-between px-4 py-3 text-left ${
-              i < menuItems.length - 1 ? 'border-b border-[#f0f0f1]' : ''
+              i < menuItems.length - 1 ? 'border-b border-[#f0f0f0]' : ''
             }`}
           >
-            <span className="text-[12px] text-[#1a1a1f]">{item.label}</span>
-            <span className="text-[#9999a6] text-[14px]">›</span>
+            <span className="text-[12px] text-[#1a1a1a]">{item.label}</span>
+            <span className="text-[#9ca3af] text-[14px]">›</span>
           </button>
         ))}
       </div>
 
       {/* Logout */}
       <div className="mx-4 mt-3 mb-2">
-        <button className="w-full bg-white rounded-[12px] shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)] py-3 text-[12px] font-semibold text-red-500">
+        <button
+          onClick={() => onNavigate('beranda')}
+          className="w-full bg-white rounded-[12px] shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)] py-3 text-[12px] font-semibold text-red-500"
+        >
           Keluar
         </button>
       </div>

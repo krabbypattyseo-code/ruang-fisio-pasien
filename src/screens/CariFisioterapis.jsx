@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo } from 'react'
 import StatusBar from '../components/StatusBar'
 import BottomNav from '../components/BottomNav'
-import Avatar from '../components/Avatar'
-import Badge from '../components/Badge'
+import TherapistCard from '../components/TherapistCard'
+import { useDebounce } from '../hooks/useDebounce'
 import { fisioterapis, SPESIALISASI_LIST, jadwalOrder } from '../data/fisioterapis'
 
 const MODE_FILTERS = ['Semua', 'Klinik', 'Homecare', 'Online', 'Top Rating']
@@ -36,19 +36,6 @@ const MODE_CARDS = [
     harga: 'Mulai Rp 150.000',
   },
 ]
-
-function fmt(n) {
-  return `Rp ${n.toLocaleString('id-ID')}`
-}
-
-function useDebounce(value, delay) {
-  const [debounced, setDebounced] = useState(value)
-  useEffect(() => {
-    const t = setTimeout(() => setDebounced(value), delay)
-    return () => clearTimeout(t)
-  }, [value, delay])
-  return debounced
-}
 
 export default function LayananPage({ onNavigate, initialSpesialisasi = null, initialModeFilter = 'Semua' }) {
   const [modeFilter, setModeFilter] = useState(initialModeFilter || 'Semua')
@@ -266,7 +253,12 @@ export default function LayananPage({ onNavigate, initialSpesialisasi = null, in
         ) : (
           <div className="flex flex-col gap-3">
             {results.map((t) => (
-              <TherapistCard key={t.id} terapis={t} onNavigate={onNavigate} />
+              <TherapistCard
+                key={t.id}
+                terapis={t}
+                actionLabel="Lihat"
+                onAction={(terapis) => onNavigate('profil-terapis', { terapis })}
+              />
             ))}
           </div>
         )}
@@ -281,39 +273,6 @@ export default function LayananPage({ onNavigate, initialSpesialisasi = null, in
   )
 }
 
-/** Card terapis — "Lihat" hanya menuju profil terapis (discovery only, bukan booking) */
-function TherapistCard({ terapis: t, onNavigate }) {
-  return (
-    <div className="bg-white rounded-[12px] shadow-[0px_2px_8px_0px_rgba(0,0,0,0.06)] p-3">
-      <div className="flex gap-3">
-        <Avatar initials={t.inisial} size="lg" />
-        <div className="flex-1 min-w-0">
-          <Badge label={t.status === 'ruang_fisio' ? 'Ruang Fisio' : 'Mitra ✓'} />
-          <p className="text-[13px] font-semibold text-[#1a1a1a] mt-0.5">{t.nama}, {t.gelar}</p>
-          <p className="text-[11px] text-[#6b7280]">{t.spesialisasi.join(' · ')}</p>
-          <div className="flex items-center gap-1 mt-0.5">
-            <span className="text-[11px] text-[#ffbd18]">{'★'.repeat(Math.round(t.rating))}</span>
-            <span className="text-[10px] text-[#6b7280]">{t.rating} · {t.jumlah_ulasan} ulasan</span>
-          </div>
-          <p className="text-[9px] text-[#6b7280] mt-0.5">
-            {t.mode_layanan.map((m) => m.charAt(0).toUpperCase() + m.slice(1)).join(' · ')} · ⏰ {t.jadwal_terdekat}
-          </p>
-        </div>
-        <div className="flex flex-col items-end justify-between flex-shrink-0">
-          <p className="text-[12px] font-semibold text-[#2aa148]">
-            Rp {t.harga_mulai.toLocaleString('id-ID')}
-          </p>
-          <button
-            onClick={() => onNavigate('profil-terapis', { terapis: t })}
-            className="bg-[#2aa148] text-white text-[10px] font-semibold rounded-[6px] px-4 h-6"
-          >
-            Lihat
-          </button>
-        </div>
-      </div>
-    </div>
-  )
-}
 
 function EmptyState({ query, onFilter }) {
   const suggestions = ['Muskuloskeletal', 'Neurologi', 'Cedera Olahraga']
