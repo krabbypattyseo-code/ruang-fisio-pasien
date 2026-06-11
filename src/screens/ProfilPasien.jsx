@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useAuth } from '../context/AuthContext'
 import StatusBar from '../components/StatusBar'
 import BottomNav from '../components/BottomNav'
 import Avatar from '../components/Avatar'
@@ -52,6 +53,7 @@ const RIWAYAT_DATA = [
 const TAB_RIWAYAT = ['Semua', 'Selesai', 'Dibatalkan']
 
 export default function ProfilPasien({ onNavigate }) {
+  const { profile, signOut } = useAuth()
   const [tabRiwayat, setTabRiwayat] = useState('Semua')
 
   const riwayatFiltered = RIWAYAT_DATA.filter((r) => {
@@ -177,7 +179,7 @@ export default function ProfilPasien({ onNavigate }) {
       {/* Logout */}
       <div className="mx-4 mt-3 mb-2">
         <button
-          onClick={() => onNavigate('beranda')}
+          onClick={async () => { await signOut(); onNavigate('beranda') }}
           className="w-full bg-white rounded-[12px] shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)] py-3 text-[12px] font-semibold text-red-500"
         >
           Keluar
