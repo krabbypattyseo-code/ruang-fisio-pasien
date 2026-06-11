@@ -23,6 +23,7 @@ import ProfilPembayaran from './screens/ProfilPembayaran'
 import ProfilNotifikasi from './screens/ProfilNotifikasi'
 import ProfilBantuan from './screens/ProfilBantuan'
 import ProfilKetentuan from './screens/ProfilKetentuan'
+import ProfilEdit from './screens/ProfilEdit'
 
 const PUBLIC_SCREENS = { login: Login }
 
@@ -49,6 +50,7 @@ const SCREENS = {
   'profil-notifikasi': ProfilNotifikasi,
   'profil-bantuan': ProfilBantuan,
   'profil-ketentuan': ProfilKetentuan,
+  'profil-edit': ProfilEdit,
 }
 
 export default function App() {

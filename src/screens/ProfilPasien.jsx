@@ -52,9 +52,22 @@ const RIWAYAT_DATA = [
 
 const TAB_RIWAYAT = ['Semua', 'Selesai', 'Dibatalkan']
 
+function getInisial(nama = '') {
+  return nama
+    .split(' ')
+    .slice(0, 2)
+    .map(w => w[0]?.toUpperCase() || '')
+    .join('')
+}
+
 export default function ProfilPasien({ onNavigate }) {
   const { profile, signOut } = useAuth()
   const [tabRiwayat, setTabRiwayat] = useState('Semua')
+
+  const nama    = profile?.nama    || '—'
+  const email   = profile?.email   || ''
+  const noHp    = profile?.no_hp   || 'Belum diisi'
+  const inisial = getInisial(nama)
 
   const riwayatFiltered = RIWAYAT_DATA.filter((r) => {
     if (tabRiwayat === 'Semua') return true
@@ -73,14 +86,17 @@ export default function ProfilPasien({ onNavigate }) {
       {/* Profile card */}
       <div className="mx-4 mt-4 bg-white rounded-[12px] shadow-[0px_2px_8px_0px_rgba(0,0,0,0.06)] p-4 flex items-center gap-4">
         <div className="w-[64px] h-[64px] rounded-full bg-[#e8f6eb] flex items-center justify-center flex-shrink-0">
-          <span className="text-[24px] font-bold text-[#2aa148]">R</span>
+          <span className="text-[24px] font-bold text-[#2aa148]">{inisial}</span>
         </div>
-        <div>
-          <p className="text-[15px] font-bold text-[#1a1a1a]">Rizki Pratama</p>
-          <p className="text-[11px] text-[#6b7280]">rizki@email.com</p>
-          <p className="text-[11px] text-[#6b7280]">+62 812-3456-7890</p>
+        <div className="flex-1 min-w-0">
+          <p className="text-[15px] font-bold text-[#1a1a1a] truncate">{nama}</p>
+          {email && <p className="text-[11px] text-[#6b7280] truncate">{email}</p>}
+          <p className="text-[11px] text-[#6b7280]">{noHp}</p>
         </div>
-        <button className="ml-auto text-[11px] font-medium text-[#2aa148] border border-[#2aa148] rounded-[8px] px-3 py-1.5">
+        <button
+          onClick={() => onNavigate('profil-edit')}
+          className="ml-auto text-[11px] font-medium text-[#2aa148] border border-[#2aa148] rounded-[8px] px-3 py-1.5 flex-shrink-0"
+        >
           Edit
         </button>
       </div>

@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .input-style {
+    @apply w-full h-10 px-3 rounded-xl border border-[#e5e9eb] text-[14px] text-[#1a1a1a] placeholder:text-[#9ca3af] focus:outline-none focus:border-[#2aa148] bg-white;
+  }
+  textarea.input-style {
+    @apply h-auto py-2.5;
+  }
+}
+
 body {
   font-family: 'Inter', sans-serif;
   background-color: #e5e9eb;
