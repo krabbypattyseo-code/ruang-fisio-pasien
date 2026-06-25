@@ -82,7 +82,7 @@ export default function BottomNav({ active, onNavigate }) {
   ]
 
   return (
-    <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-[390px] bg-white border-t border-[#e5e9eb] h-[72px] z-50 shadow-[0px_-2px_8px_0px_rgba(0,0,0,0.07)]">
+    <div className="app-bottom-nav bg-white border-t border-[#e5e9eb] h-[72px] shadow-[0px_-2px_8px_0px_rgba(0,0,0,0.07)]">
       <div className="flex justify-around items-center h-full px-2">
         {tabs.map((tab) => {
           const isActive = active === tab.id

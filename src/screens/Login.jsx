@@ -2,12 +2,15 @@ import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import StatusBar from '../components/StatusBar'
 
+const DEV_EMAIL = import.meta.env.VITE_DEV_LOGIN_EMAIL || ''
+const DEV_PASSWORD = import.meta.env.VITE_DEV_LOGIN_PASSWORD || ''
+
 export default function Login({ onNavigate }) {
   const { signIn, signUp } = useAuth()
   const [tab, setTab]         = useState('masuk') // 'masuk' | 'daftar'
-  const [email, setEmail]     = useState('')
-  const [password, setPassword] = useState('')
-  const [nama, setNama]       = useState('')
+  const [email, setEmail]     = useState(import.meta.env.DEV ? DEV_EMAIL : '')
+  const [password, setPassword] = useState(import.meta.env.DEV ? DEV_PASSWORD : '')
+  const [nama, setNama]       = useState(import.meta.env.DEV ? 'Haris TN' : '')
   const [loading, setLoading] = useState(false)
   const [error, setError]     = useState('')
 
@@ -30,6 +33,7 @@ export default function Login({ onNavigate }) {
     } catch (err) {
       setError(
         err.message.includes('Invalid login') ? 'Email atau password salah.' :
+        err.message.includes('Email not confirmed') ? 'Email belum dikonfirmasi. Matikan "Confirm email" di Supabase → Authentication → Providers → Email.' :
         err.message.includes('already registered') ? 'Email sudah terdaftar. Coba masuk.' :
         err.message
       )
@@ -125,10 +129,13 @@ export default function Login({ onNavigate }) {
         </form>
       </div>
 
-      {/* Demo mode info */}
-      <p className="text-center text-[11px] text-[#9ca3af] mt-4 px-6">
-        Belum terhubung ke Supabase? App berjalan dalam mode demo otomatis.
-      </p>
+      {import.meta.env.DEV && DEV_EMAIL && (
+        <p className="text-center text-[11px] text-[#6b7280] mt-4 px-6 leading-relaxed">
+          Dev login: <span className="font-medium">{DEV_EMAIL}</span>
+          <br />
+          Password: <span className="font-medium">{DEV_PASSWORD}</span>
+        </p>
+      )}
     </div>
   )
 }

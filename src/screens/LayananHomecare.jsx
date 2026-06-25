@@ -18,12 +18,12 @@ const rules = [
 
 export default function LayananHomecare({ onNavigate }) {
   return (
-    <div className="bg-[#f8f9fa] min-h-screen pb-[80px]">
+    <div className="bg-[#f8f9fa] min-h-screen pb-[140px]">
 
-      {/* ── FIXED HEADER ── */}
-      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[390px] z-30">
+      {/* ── STICKY HEADER ── */}
+      <div className="sticky top-0 z-30 w-full">
         <StatusBar />
-        <div className="bg-white flex items-center px-4 h-[52px] shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)]">
+        <div className="bg-white flex items-center px-5 h-[52px] shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)]">
           <button onClick={() => onNavigate('beranda')} className="text-[12px] text-[#2aa148]">
             {'< Kembali'}
           </button>
@@ -34,11 +34,9 @@ export default function LayananHomecare({ onNavigate }) {
           <p className="text-[10px] text-[#d1f7db] mt-1">Layanan setara klinik — kamu cukup di rumah atau kantor</p>
         </div>
       </div>
-      {/* Spacer: StatusBar 44 + Navbar 52 + Hero 90 = 186px */}
-      <div className="h-[186px]" />
 
       {/* Info chips */}
-      <div className="flex gap-2 px-4 mt-4">
+      <div className="flex gap-2 px-5 mt-5">
         {[
           { label: 'Biaya transport', value: 'Rp 5.000/km PP' },
           { label: 'Cakupan', value: 'Tangerang Raya' },
@@ -51,9 +49,9 @@ export default function LayananHomecare({ onNavigate }) {
         ))}
       </div>
 
-      <hr className="mx-4 mt-4 border-[#e5e9eb]" />
+      <hr className="mx-5 mt-5 border-[#e5e9eb]" />
 
-      <div className="px-4 mt-4">
+      <div className="px-5 mt-5">
         {/* Zona */}
         <p className="text-[14px] font-semibold text-[#1a1a1a] mb-3">Zona Layanan</p>
         <div className="flex flex-col gap-2">
@@ -97,7 +95,7 @@ export default function LayananHomecare({ onNavigate }) {
 
         {/* Ketentuan */}
         <p className="text-[14px] font-semibold text-[#1a1a1a] mt-4 mb-2">Ketentuan Penting</p>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 mb-8">
           {rules.map((r) => (
             <div key={r} className="flex items-start gap-2">
               <span className="text-[11px] font-semibold text-[#2aa148] mt-0.5">•</span>
@@ -107,7 +105,7 @@ export default function LayananHomecare({ onNavigate }) {
         </div>
       </div>
 
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-[390px] bg-white px-4 py-4 z-50">
+      <div className="app-bottom-nav bg-white px-5 py-5 border-t border-[#e5e9eb]">
         <button
           onClick={() => onNavigate('layanan', { initialModeFilter: 'Homecare' })}
           className="w-full bg-[#2aa148] text-white text-[13px] font-bold rounded-[12px] h-12"

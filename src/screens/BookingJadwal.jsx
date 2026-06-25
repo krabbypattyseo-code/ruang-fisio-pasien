@@ -136,17 +136,21 @@ export default function BookingJadwal({ onNavigate, selectedPkg: pkgProp = null,
 
   return (
     <div className="bg-[#f8f9fa] min-h-screen pb-[160px]">
-      <StatusBar />
 
-      <div className="bg-white flex items-center px-4 h-[52px] shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)]">
-        <button onClick={() => onNavigate(backScreen, backState || { terapis })} className="text-[20px] text-[#1a1a1a]">←</button>
-        <p className="flex-1 text-center text-[16px] font-semibold text-[#1a1a1a]">Mode & Jadwal</p>
+      {/* ── STICKY HEADER ── */}
+      <div className="sticky top-0 z-30 w-full bg-white shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)]">
+        <StatusBar />
+
+        <div className="flex items-center px-5 h-[52px]">
+          <button onClick={() => onNavigate(backScreen, backState || { terapis })} className="text-[20px] text-[#1a1a1a]">←</button>
+          <p className="flex-1 text-center text-[16px] font-semibold text-[#1a1a1a] pr-5">Mode & Jadwal</p>
+        </div>
+
+        <StepIndicator step={2} />
       </div>
 
-      <StepIndicator step={2} />
-
       {/* Paket terpilih */}
-      <div className="mx-4 mt-2 bg-white rounded-[10px] shadow-[0px_1px_4px_0px_rgba(0,0,0,0.04)] p-3 flex items-center gap-3">
+      <div className="mx-4 mt-3 bg-white rounded-[10px] shadow-[0px_1px_4px_0px_rgba(0,0,0,0.04)] p-3 flex items-center gap-3">
         <Avatar initials={terapis.inisial} size="md" />
         <div className="flex-1">
           <Badge label={terapis.status === 'ruang_fisio' ? 'Ruang Fisio' : 'Mitra ✓'} />

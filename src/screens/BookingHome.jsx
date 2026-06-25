@@ -196,17 +196,20 @@ function StateAktif({ onNavigate }) {
 export default function BookingHome({ onNavigate }) {
   return (
     <div className="bg-[#f8f9fa] min-h-screen pb-[80px] flex flex-col">
-      <StatusBar />
 
-      {/* Header */}
-      <div className="bg-white flex items-center justify-between px-5 h-[52px] shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)]">
-        <p className="text-[17px] font-bold text-[#1a1a1a]">Booking</p>
-        <button
-          onClick={() => onNavigate('booking-pilih-terapis')}
-          className="bg-[#2aa148] text-white text-[11px] font-semibold rounded-[8px] px-3 h-7 flex items-center gap-1"
-        >
-          + Buat Baru
-        </button>
+      {/* ── STICKY HEADER ── */}
+      <div className="sticky top-0 z-30 w-full bg-white shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)]">
+        <StatusBar />
+
+        <div className="flex items-center justify-between px-5 h-[52px]">
+          <p className="text-[17px] font-bold text-[#1a1a1a]">Booking</p>
+          <button
+            onClick={() => onNavigate('booking-pilih-terapis')}
+            className="bg-[#2aa148] text-white text-[11px] font-semibold rounded-[8px] px-3 h-7 flex items-center gap-1"
+          >
+            + Buat Baru
+          </button>
+        </div>
       </div>
 
       {/* Content — show active state as default */}

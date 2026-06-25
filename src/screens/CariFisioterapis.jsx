@@ -112,36 +112,33 @@ export default function LayananPage({ onNavigate, initialSpesialisasi = null, in
     return `${n} fisioterapis ditemukan`
   })()
 
-  // Fixed header: StatusBar 44 + search bar 52 + filter chips 44 = 140px
-  const HEADER_H = 140
-
   return (
     <div className="bg-[#f8f9fa] min-h-screen pb-[80px]">
 
-      {/* ── FIXED HEADER ── */}
-      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[390px] z-30 bg-white shadow-[0px_2px_8px_0px_rgba(0,0,0,0.09)]">
+      {/* ── STICKY HEADER ── */}
+      <div className="sticky top-0 z-30 w-full bg-white shadow-[0px_2px_8px_0px_rgba(0,0,0,0.09)]">
         <StatusBar />
 
         {/* Title + Search bar */}
-        <div className="flex items-center gap-2 px-3 h-[52px]">
-          <p className="text-[15px] font-bold text-[#1a1a1a] mr-1">Layanan</p>
-          <div className="flex-1 bg-[#f4f4f4] rounded-[10px] h-10 flex items-center px-3 gap-2">
-            <span className="text-[#9ca3af] text-[14px]">🔍</span>
+        <div className="flex items-center gap-2.5 px-5 h-[52px]">
+          <p className="text-[15px] font-bold text-[#1a1a1a] shrink-0">Layanan</p>
+          <div className="flex-1 bg-[#f4f4f4] rounded-[10px] h-10 flex items-center px-3 gap-2 min-w-0">
+            <span className="text-[#9ca3af] text-[14px] shrink-0">🔍</span>
             <input
               type="text"
               value={searchRaw}
               onChange={(e) => setSearchRaw(e.target.value)}
               placeholder="Cari fisioterapis atau kondisi..."
-              className="flex-1 bg-transparent text-[11px] text-[#1a1a1a] placeholder-[#a6a6a6] outline-none"
+              className="flex-1 bg-transparent text-[11px] text-[#1a1a1a] placeholder-[#a6a6a6] outline-none min-w-0"
             />
             {searchRaw && (
-              <button onClick={() => setSearchRaw('')} className="text-[#9ca3af] text-[14px] leading-none">✕</button>
+              <button onClick={() => setSearchRaw('')} className="text-[#9ca3af] text-[14px] leading-none shrink-0">✕</button>
             )}
           </div>
         </div>
 
         {/* Filter chips */}
-        <div className="flex gap-2 px-4 py-2 overflow-x-auto border-t border-[#f0f0f0]">
+        <div className="flex gap-2 px-5 py-2.5 overflow-x-auto border-t border-[#f0f0f0]">
           {MODE_FILTERS.map((f) => (
             <button
               key={f}
@@ -157,9 +154,6 @@ export default function LayananPage({ onNavigate, initialSpesialisasi = null, in
           ))}
         </div>
       </div>
-      {/* ── END FIXED HEADER ── */}
-
-      <div style={{ height: HEADER_H }} />
 
       {/* ── 3 CARD MODE LAYANAN ── */}
       <div className="px-4 pt-4 pb-3">

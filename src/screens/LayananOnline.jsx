@@ -88,12 +88,12 @@ export default function LayananOnline({ onNavigate, terapis = null, from = 'bera
   }
 
   return (
-    <div className="bg-[#f8f9fa] min-h-screen pb-[80px]">
+    <div className="bg-[#f8f9fa] min-h-screen pb-[140px]">
 
-      {/* ── FIXED HEADER ── */}
-      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[390px] z-30">
+      {/* ── STICKY HEADER ── */}
+      <div className="sticky top-0 z-30 w-full">
         <StatusBar />
-        <div className="bg-white flex items-center px-4 h-[52px] shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)]">
+        <div className="bg-white flex items-center px-5 h-[52px] shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)]">
           <button onClick={() => onNavigate(from, fromState)} className="text-[12px] text-[#2aa148]">
             {'< Kembali'}
           </button>
@@ -106,12 +106,10 @@ export default function LayananOnline({ onNavigate, terapis = null, from = 'bera
           </p>
         </div>
       </div>
-      {/* Spacer: StatusBar 44 + Navbar 52 + Hero ~64 = 160px */}
-      <div className="h-[160px]" />
 
       {/* Terapis context banner — hanya muncul kalau ada konteks terapis */}
       {terapis && (
-        <div className="mx-4 mt-3 bg-white rounded-[10px] border border-[#e5e9eb] p-3 flex items-center gap-3 shadow-[0px_1px_4px_0px_rgba(0,0,0,0.04)]">
+        <div className="mx-5 mt-4 bg-white rounded-[10px] border border-[#e5e9eb] p-3 flex items-center gap-3 shadow-[0px_1px_4px_0px_rgba(0,0,0,0.04)]">
           <Avatar initials={terapis.inisial} size="sm" />
           <div>
             <p className="text-[12px] font-semibold text-[#1a1a1a]">{terapis.nama}, {terapis.gelar}</p>
@@ -121,7 +119,7 @@ export default function LayananOnline({ onNavigate, terapis = null, from = 'bera
       )}
 
       {/* Info chips */}
-      <div className="flex gap-2 px-4 mt-3">
+      <div className="flex gap-2 px-5 mt-4">
         {[
           { label: 'Mulai dari', value: fmt(minPrice) },
           { label: 'Durasi', value: '30–60 menit' },
@@ -134,9 +132,9 @@ export default function LayananOnline({ onNavigate, terapis = null, from = 'bera
         ))}
       </div>
 
-      <hr className="mx-4 mt-4 border-[#e5e9eb]" />
+      <hr className="mx-5 mt-5 border-[#e5e9eb]" />
 
-      <div className="px-4 mt-4">
+      <div className="px-5 mt-5">
         {/* Pilih jenis konsultasi */}
         <p className="text-[14px] font-semibold text-[#1a1a1a] mb-1">Pilih Jenis Konsultasi</p>
         <p className="text-[10px] text-[#6b7280] mb-3">
@@ -200,7 +198,7 @@ export default function LayananOnline({ onNavigate, terapis = null, from = 'bera
         </div>
 
         {/* Warning */}
-        <div className="bg-[#fff7e0] rounded-[8px] px-3 py-3 mt-4">
+        <div className="bg-[#fff7e0] rounded-[8px] px-3 py-3 mt-4 mb-8">
           <p className="text-[10px] text-[#a06414]">
             ⚠ Tidak cocok untuk kondisi akut, pasca operasi baru, atau nyeri hebat
           </p>
@@ -208,7 +206,7 @@ export default function LayananOnline({ onNavigate, terapis = null, from = 'bera
       </div>
 
       {/* Sticky CTA */}
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-[390px] bg-white border-t border-[#e5e9eb] px-4 py-4 z-50">
+      <div className="app-bottom-nav bg-white border-t border-[#e5e9eb] px-5 py-5">
         {selected && (
           <p className="text-[10px] text-[#6b7280] mb-1 text-center">
             {selected.label} · {fmt(selected.price)} · {selected.duration}

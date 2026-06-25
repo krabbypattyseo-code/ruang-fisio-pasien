@@ -16,7 +16,7 @@ export default function StatusBar() {
   }, [])
 
   return (
-    <div className="h-11 bg-white flex items-center px-4">
+    <div className="status-bar-content bg-white flex items-end px-4 pb-2 min-h-11 max-[450px]:pt-0 max-[450px]:min-h-11">
       <span className="text-[15px] font-semibold text-[#1a1a1a]">{time}</span>
     </div>
   )

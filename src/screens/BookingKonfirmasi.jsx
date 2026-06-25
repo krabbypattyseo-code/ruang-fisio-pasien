@@ -30,7 +30,7 @@ export default function BookingKonfirmasi({
 
   const bookingDetail = buildBookingDetail({ terapis, pkg, mode, layanan, selectedDates, selectedTimes })
 
-  const HEADER_H = 148
+  const HEADER_H = 160
 
   async function handleBayar() {
     setPaying(true)
@@ -84,7 +84,7 @@ export default function BookingKonfirmasi({
       </div>
 
       {/* Spacer */}
-      <div style={{ height: HEADER_H + 12 }} />
+      <div style={{ height: HEADER_H + 16 }} />
 
       <div className="px-4 flex flex-col gap-3">
         {/* Detail Booking */}

@@ -63,15 +63,14 @@ export default function ProfilLaporan({ onNavigate, from = 'profil' }) {
   return (
     <div className="bg-[#f8f9fa] min-h-screen pb-[80px]">
 
-      {/* Fixed Header */}
-      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[390px] z-30 bg-white shadow-[0px_2px_8px_0px_rgba(0,0,0,0.07)]">
+      {/* ── STICKY HEADER ── */}
+      <div className="sticky top-0 z-30 w-full bg-white shadow-[0px_2px_8px_0px_rgba(0,0,0,0.07)]">
         <StatusBar />
-        <div className="flex items-center px-4 h-[52px]">
+        <div className="flex items-center px-5 h-[52px]">
           <button onClick={() => onNavigate(from)} className="text-[20px] text-[#1a1a1a]">‹</button>
-          <p className="flex-1 text-center text-[15px] font-semibold text-[#1a1a1a]">Laporan Sesi Saya</p>
+          <p className="flex-1 text-center text-[15px] font-semibold text-[#1a1a1a] pr-5">Laporan Sesi Saya</p>
         </div>
-        {/* Filter periode — sticky di bawah title */}
-        <div className="flex gap-2 px-4 py-3 border-t border-[#f0f0f0] overflow-x-auto">
+        <div className="flex gap-2 px-5 py-3 border-t border-[#f0f0f0] overflow-x-auto">
           {PERIODE_OPTIONS.map((p) => (
             <button
               key={p}
@@ -85,10 +84,8 @@ export default function ProfilLaporan({ onNavigate, from = 'profil' }) {
           ))}
         </div>
       </div>
-      {/* Spacer: StatusBar 44 + title 52 + filter row 46 = 142px */}
-      <div className="h-[142px]" />
 
-      <div className="px-4 flex flex-col gap-4">
+      <div className="px-4 pt-4 flex flex-col gap-4">
 
         {/* Stat cards 2x2 */}
         <div className="grid grid-cols-2 gap-2">

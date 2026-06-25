@@ -108,8 +108,8 @@ export default function Beranda({ onNavigate }) {
   return (
     <div className="bg-[#f8f9fa] min-h-screen pb-[80px]">
 
-      {/* ── FIXED HEADER ── */}
-      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[390px] z-30">
+      {/* ── STICKY HEADER (freeze saat scroll) ── */}
+      <div className="sticky top-0 z-30 w-full">
         <StatusBar />
 
         {/* Navbar */}
@@ -135,10 +135,6 @@ export default function Beranda({ onNavigate }) {
           </button>
         </div>
       </div>
-      {/* ── END FIXED HEADER ── */}
-
-      {/* Spacer: StatusBar 44 + Navbar 56 + Hero ~90 = 190px */}
-      <div className="h-[190px]" />
 
       <div className="px-4 mt-4">
         {/* Mode Layanan */}

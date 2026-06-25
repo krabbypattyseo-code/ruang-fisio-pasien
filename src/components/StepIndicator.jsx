@@ -14,7 +14,7 @@ const DEFAULT_STEPS = [
  */
 export default function StepIndicator({ step, steps = DEFAULT_STEPS }) {
   return (
-    <div className="bg-white h-[44px] flex items-center justify-center px-3 border-b border-[#e5e9eb]">
+    <div className="bg-white flex items-center justify-center px-3 pt-2 pb-3 border-b border-[#e5e9eb]">
       {steps.map((s, i) => (
         <div key={s.num} className="flex items-center">
           <div className={`h-[20px] flex items-center px-2 rounded-full text-[9px] font-semibold whitespace-nowrap ${

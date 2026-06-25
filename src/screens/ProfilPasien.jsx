@@ -8,7 +8,6 @@ const menuItems = [
   { label: '📊  Laporan Sesi Saya', screen: 'profil-laporan' },
   { label: '⭐  Terapis Favorit', screen: 'profil-favorit' },
   { label: '💳  Metode Pembayaran', screen: 'profil-pembayaran' },
-  { label: '🔔  Notifikasi', screen: 'profil-notifikasi' },
   { label: '❓  Bantuan & FAQ', screen: 'profil-bantuan' },
   { label: '📋  Syarat & Ketentuan', screen: 'profil-ketentuan' },
 ]

@@ -35,14 +35,18 @@ export default function BookingPilihPaket({ onNavigate, terapis: terapisProp = n
 
   return (
     <div className="bg-[#f8f9fa] min-h-screen pb-[80px]">
-      <StatusBar />
 
-      <div className="bg-white flex items-center px-4 h-[52px] shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)]">
-        <button onClick={() => onNavigate('profil-terapis', { terapis })} className="text-[20px] text-[#1a1a1a]">←</button>
-        <p className="flex-1 text-center text-[15px] font-semibold text-[#1a1a1a]">Pilih Paket</p>
+      {/* ── STICKY HEADER ── */}
+      <div className="sticky top-0 z-30 w-full bg-white shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)]">
+        <StatusBar />
+
+        <div className="flex items-center px-5 h-[52px]">
+          <button onClick={() => onNavigate('profil-terapis', { terapis })} className="text-[20px] text-[#1a1a1a]">←</button>
+          <p className="flex-1 text-center text-[15px] font-semibold text-[#1a1a1a] pr-5">Pilih Paket</p>
+        </div>
+
+        <StepIndicator step={1} />
       </div>
-
-      <StepIndicator step={1} />
 
       {/* Booking summary */}
       <div className="mx-4 mt-3 bg-[#e8f6eb] rounded-[10px] px-3 py-2 flex items-center justify-between">

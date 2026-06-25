@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuth } from './context/AuthContext'
 import Login from './screens/Login'
 import Beranda from './screens/Beranda'
@@ -20,7 +20,6 @@ import LayananOnline from './screens/LayananOnline'
 import ProfilLaporan from './screens/ProfilLaporan'
 import ProfilFavorit from './screens/ProfilFavorit'
 import ProfilPembayaran from './screens/ProfilPembayaran'
-import ProfilNotifikasi from './screens/ProfilNotifikasi'
 import ProfilBantuan from './screens/ProfilBantuan'
 import ProfilKetentuan from './screens/ProfilKetentuan'
 import ProfilEdit from './screens/ProfilEdit'
@@ -47,7 +46,6 @@ const SCREENS = {
   'profil-laporan': ProfilLaporan,
   'profil-favorit': ProfilFavorit,
   'profil-pembayaran': ProfilPembayaran,
-  'profil-notifikasi': ProfilNotifikasi,
   'profil-bantuan': ProfilBantuan,
   'profil-ketentuan': ProfilKetentuan,
   'profil-edit': ProfilEdit,
@@ -62,6 +60,14 @@ export default function App() {
     setScreen(screenName)
     setScreenState(state)
   }
+
+  // Reset scroll ke atas setiap pindah halaman
+  useEffect(() => {
+    const scrollEl = document.querySelector('.phone-screen-scroll')
+    if (!scrollEl) return
+    scrollEl.scrollTop = 0
+    scrollEl.classList.toggle('phone-screen-scroll--fit', screen === 'booking-berhasil')
+  }, [screen])
 
   if (loading) {
     return (

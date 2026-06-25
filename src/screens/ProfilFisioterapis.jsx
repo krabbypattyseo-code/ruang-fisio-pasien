@@ -70,7 +70,7 @@ function ProfilTab({ terapis, onNavigate, selectedMode, setSelectedMode }) {
   const jadwal = getJadwal(terapis)
 
   return (
-    <div className="px-5 mt-4 flex flex-col gap-4 pb-[160px]">
+    <div className="px-5 pt-5 flex flex-col gap-4 pb-4">
       {/* Kondisi yang Ditangani */}
       <div>
         <p className="text-[13px] font-semibold text-[#1a1a1a]">Kondisi yang Ditangani</p>
@@ -169,7 +169,7 @@ function BackgroundTab({ terapis }) {
   )
 
   return (
-    <div className="px-4 mt-4 flex flex-col gap-1 pb-[160px]">
+    <div className="px-5 pt-5 flex flex-col gap-1 pb-4">
       <Section title="A — Identitas Diri" rows={identitas} />
       <Section title="B — Pendidikan" rows={pendidikan} />
 
@@ -209,19 +209,16 @@ export default function ProfilFisioterapis({ onNavigate, terapis: terapisProp = 
   const badgeLabel = terapis.status === 'ruang_fisio' ? 'Internal RF' : 'Mitra ✓'
   const stars = Math.round(terapis.rating)
 
-  // Diukur dari DOM: fixed header = 325px
-  const HEADER_H = 325
-
   return (
-    <div className="bg-[#f8f9fa] min-h-screen">
+    <div className="bg-[#f8f9fa] min-h-screen pb-[120px]">
 
-      {/* ── FIXED HEADER ── */}
-      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[390px] z-30 shadow-[0px_2px_8px_0px_rgba(0,0,0,0.08)]">
+      {/* ── STICKY HEADER ── */}
+      <div className="sticky top-0 z-30 w-full shadow-[0px_2px_8px_0px_rgba(0,0,0,0.08)]">
         <StatusBar />
 
         {/* Hero */}
         <div className="bg-[#2aa148] h-[130px] relative">
-          <button onClick={() => onNavigate('layanan')} className="absolute top-3 left-3 text-white text-[15px] font-medium">
+          <button onClick={() => onNavigate('layanan')} className="absolute top-3 left-5 text-white text-[15px] font-medium">
             ← Profil Fisioterapis
           </button>
           <div className="absolute left-1/2 -translate-x-1/2 top-[66px]">
@@ -256,10 +253,6 @@ export default function ProfilFisioterapis({ onNavigate, terapis: terapisProp = 
           ))}
         </div>
       </div>
-      {/* ── END FIXED HEADER ── */}
-
-      {/* Spacer */}
-      <div style={{ height: HEADER_H }} />
 
       {tab === 'profil'
         ? <ProfilTab terapis={terapis} onNavigate={onNavigate} selectedMode={selectedMode} setSelectedMode={setSelectedMode} />
@@ -267,8 +260,8 @@ export default function ProfilFisioterapis({ onNavigate, terapis: terapisProp = 
       }
 
       {/* Sticky CTA */}
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-[390px] bg-white border-t border-[#e5e9eb] px-5 py-3 z-50">
-        <p className="text-[10px] text-[#6b7280] mb-2">
+      <div className="app-bottom-nav bg-white border-t border-[#e5e9eb] px-5 py-4">
+        <p className="text-[10px] text-[#6b7280] mb-2.5 text-center">
           {selectedMode === 'Online'
             ? `Online mulai Rp ${(Math.round(terapis.harga_mulai * 0.5 / 5000) * 5000).toLocaleString('id-ID')} · Pilih jenis konsultasi`
             : selectedMode === 'Homecare'
@@ -284,7 +277,7 @@ export default function ProfilFisioterapis({ onNavigate, terapis: terapisProp = 
               onNavigate('booking-pilih-paket', { terapis })
             }
           }}
-          className="w-full bg-[#2aa148] text-white text-[13px] font-semibold rounded-[10px] h-10"
+          className="mx-2 w-[calc(100%-16px)] bg-[#2aa148] text-white text-[12px] font-semibold rounded-[10px] h-9"
         >
           {selectedMode === 'Online' ? 'Lihat Paket Konsultasi Online →' : 'Booking Sekarang'}
         </button>
